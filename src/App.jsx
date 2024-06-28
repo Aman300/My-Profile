@@ -1,32 +1,43 @@
-import { useState } from 'react'
-import './App.css'
 
-function App() {
+import { Routes, Route, BrowserRouter, Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Work from './pages/Work';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import UserContextProvider from './context/UserContextProvider';
+import Services from './pages/Services';
+
+export default function App() {
   return (
     <>
-    <navbar>
-      <div className='w-full py-3 border-b'>
-
-        <div className='flex justify-between px-20 items-center font-semibold'>
-          <div>
-            <h1>LOGO</h1>
-          </div>
-          <div className='flex gap-10'>
-            <a href="">Home</a>
-            <a href="">Work</a>
-            <a href="">About</a>
-            <a href="">Services</a>
-            <a href="">Testimonial</a>
-          </div>
-          <div>
-            <button className='py-2 px-6 bg-black text-white rounded-3xl font-semibold'>Contact</button>
-          </div>
-        </div>
-        
-      </div>
-    </navbar>      
+    
+    <BrowserRouter>
+      <UserContextProvider>
+        <Routes>
+          <Route>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <Navbar />
+                  <div>
+                    <Outlet /> 
+                  </div>
+                  {/* <Footer/> */}
+                </div>
+              }
+            >
+              <Route path="/" element={<Home />} /> 
+              <Route path="/work" element={<Work />} /> 
+              <Route path="/about" element={<About />} /> 
+              <Route path="/contact" element={<Contact />} />             
+              <Route path="/services" element={<Services />} />             
+            </Route>
+         </Route>
+        </Routes>
+        </UserContextProvider>
+      </BrowserRouter>
     </>
   )
 }
-
-export default App
